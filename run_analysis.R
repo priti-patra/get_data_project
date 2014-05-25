@@ -9,13 +9,6 @@ if (!file.exists("UCI HAR Dataset")) {
 	unzip("getdata-projectfiles-UCI HAR Dataset.zip")
 }	
 
-#list.files("./UCI HAR Dataset")
-#[1] "activity_labels.txt" "features.txt"		"features_info.txt"
-#[4] "README.txt"		  "test"			"train"
-
-#dateDownloaded<-date()	
-#dateDownloaded
-#[1] "THU May 22 17:24:42 2014"
 
 #Step1:
 
