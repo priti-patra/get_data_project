@@ -1,5 +1,7 @@
+#loads package reshape2
 library(reshape2)
 
+#Gets required file in working directory
 if (!file.exists("UCI HAR Dataset")) {
 	if (!file.exists("dataset.zip")) {
 		fileUrl<-"http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
@@ -29,7 +31,6 @@ merged_feature_activity_subject<-cbind(feature_merged_train_test,activity_merged
 #dim(merged_feature_activity_subject)
 #[1] 10299 563
 colnames(merged_feature_activity_subject)[562:563]<-c("activity","subject") 
-
 features<-read.table("./UCI HAR dataset/features.txt")
 names(merged_feature_activity_subject)[1:nrow(features)]<-as.vector(features$V2)
 
@@ -47,11 +48,11 @@ activity_labels<-read.table("./UCI HAR dataset/activity_labels.txt",stringsAsFac
 measurement_data$activity<-factor(activity_labels$V2[measurement_data$activity],levels=activity_labels$V2)
 
 #Step4: Appropriately labels the column names of data set with descriptive names
-##by replacing (),-,... and making it lower case
+##by replacing (),-,... and making it lower case and changing suject column to factor type
 col_names<-sapply(colnames(measurement_data), function(x) gsub("\\(\\)|\\-|\\.", "" ,x))
-##To convert names to lower case
-names(measurement_data)<-tolower(col_names)
-
+col_names<-tolower(col_names)
+colnames(measurement_data)<- sapply(col_names, function(x) gsub("(body)+", "body", x)) 
+measurement_data$subject<- factor(measurement_data$subject)
 
 #Step5:Creates a tidy data set with the average of each variable for each activity and each subject+
 

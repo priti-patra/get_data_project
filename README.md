@@ -11,10 +11,10 @@ INSTRUCTIONS:
 * The script file "run_analysis.R" returns followings in given order.
 
     * **merged_feature_activity_subject**: This contains merged data from training and test sets of features ,activity and subject.It contains 10299 columns and 563 rows
-    * **measurement_data**: This retrieved only the measurements data on the mean and standard deviation for each measurement by searching only for mean() and std(). It contains 66 such measurement columns and an activity and a subject column(Totally 68 columns)
+    * **measurement_data**: This retrieved only the measurements data on the mean and standard deviation for each measurement by searching only for mean() and std(). It contains 66 such measurement columns and an activity and a subject column(Totally 68 columns).It doesnot include meanfreq() as that refers to Weighted average of the frequency components 
       
     * **meaurement_data$activity**: This contains descriptive activity names to name the activities in the data set by assigning labels from activity_labels which takes labels from activity_labels.txt 
-    * **names(measurement_data)** :   Columns of the data set contains descriptive names by removing (),.,- and converting into lowercase
+    * **names(measurement_data)** :   Columns of the data set contains descriptive names by removing (),.,- and converting into lowercase ,restricting word body appears only in  string and converting suject to factor type 
     * **tidy_data** :This is a second, independent tidy data set with the average of each variable for each activity and each subject   
   
 * The script also returns some intermediate data
