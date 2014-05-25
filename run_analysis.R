@@ -48,7 +48,8 @@ activity_labels<-read.table("./UCI HAR dataset/activity_labels.txt",stringsAsFac
 measurement_data$activity<-factor(activity_labels$V2[measurement_data$activity],levels=activity_labels$V2)
 
 #Step4: Appropriately labels the column names of data set with descriptive names
-##by replacing (),-,... and making it lower case and changing suject column to factor type
+##by replacing (),-,... and making it lower case and restricting occurence of word "body"
+#to only one in a name string and changing suject column to factor type
 col_names<-sapply(colnames(measurement_data), function(x) gsub("\\(\\)|\\-|\\.", "" ,x))
 col_names<-tolower(col_names)
 colnames(measurement_data)<- sapply(col_names, function(x) gsub("(body)+", "body", x)) 
