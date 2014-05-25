@@ -10,7 +10,7 @@ if (!file.exists("UCI HAR Dataset")) {
 }	
 
 
-#Step1:
+#Step1:Merges the training and the test sets to create one data set merged_feature_activity_subject
 
 feature_test<-read.table("./UCI HAR dataset/test/X_test.txt")
 feature_train<-read.table("./UCI HAR dataset/train/X_train.txt")
@@ -33,7 +33,7 @@ colnames(merged_feature_activity_subject)[562:563]<-c("activity","subject")
 features<-read.table("./UCI HAR dataset/features.txt")
 names(merged_feature_activity_subject)[1:nrow(features)]<-as.vector(features$V2)
 
-#Step2
+#Step2: Extracts only the measurements on the mean and standard deviation for each measurement
 idx<-grepl("mean\\(\\)|std\\(\\)",features$V2,ignore.case=TRUE)
 
 #sum(idx)
@@ -42,18 +42,18 @@ measurement_data<-merged_feature_activity_subject[,-which(!idx) ]
 #dim(measurement_data)
 # 10299	68
 
-#Step3
+#Step3: Uses descriptive activity names to name the activities in the data set
 activity_labels<-read.table("./UCI HAR dataset/activity_labels.txt",stringsAsFactors=FALSE)
 measurement_data$activity<-factor(activity_labels$V2[measurement_data$activity],levels=activity_labels$V2)
 
-#Step4
-##To replace (),-,... with .
+#Step4: Appropriately labels the column names of data set with descriptive names
+##by replacing (),-,... and making it lower case
 col_names<-sapply(colnames(measurement_data), function(x) gsub("\\(\\)|\\-|\\.", "" ,x))
 ##To convert names to lower case
 names(measurement_data)<-tolower(col_names)
 
 
-#Step5
+#Step5:Creates a tidy data set with the average of each variable for each activity and each subject+
 
 melt_data<-melt(measurement_data,id=c("activity","subject"))
 tidy_data<-dcast(melt_data, subject + activity ~ variable,fun.aggregate=mean)
